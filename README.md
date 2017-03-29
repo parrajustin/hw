@@ -11,11 +11,11 @@ a->b->b 3*15
       + = 208
 
 # question 2
-ram: 4915200 kB 
+ram: 4915200000 k 
 float = 4 bytes
 
-4915200 / 2 = 614400
-614400 / 4 = 614400
+4915200000 / 2 <- float * float = 2457600000
+2457600000 / 4 <- size of float = 614400000
 
 therefore the largest N * N float array can be 614400 * 614400
 
@@ -35,11 +35,22 @@ a) answer:
  64.000 192.000 240.000 160.000  60.000  12.000   1.000   0.000
 128.000 448.000 672.000 560.000 280.000  84.000  14.000   1.000
 b)
+check code
 c)
 ram: 4915200 kB 
-float = 2 bytes
+int = 2 bytes
 
-4915200 / 2 = 2457600
-2457600 / 2 = 1228800
+4915200000 / 2 = 2457600000
+2457600000 / 2 <-size of int= 1228800000
+therefore 1228800000 * 1228800000 int array
 d)
+ram: 4915200 kB 
+int = 2 bytes
 
+4915200000 / 2 = 2457600000
+2457600000 / 8 <-size of double= 307200000
+therefore 307200000 * 307200000 double array
+
+I'm not sure how I understand, According to c data type sizes a double is 8b therefore there would be a smaller size of doubles allowed
+according to my calculations the max size would be: a 307200000 * 307200000 matrix  but there would be problems since when creating it 
+ram runs out because there are more variables other than just the grid .
