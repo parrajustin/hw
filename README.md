@@ -51,6 +51,8 @@ int = 2 bytes
 2457600000 / 8 <-size of double= 307200000
 therefore 307200000 * 307200000 double array
 
-I'm not sure how I understand, According to c data type sizes a double is 8b therefore there would be a smaller size of doubles allowed
+I'm not sure  I understand, According to c data type sizes a double is 8b therefore there would be a smaller size of doubles allowed
 according to my calculations the max size would be: a 307200000 * 307200000 matrix  but there would be problems since when creating it 
 ram runs out because there are more variables other than just the grid .
+
+also limited to 2,147,483,647 since that is the max int size

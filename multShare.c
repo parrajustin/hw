@@ -135,7 +135,16 @@ __global__ void MatMulKernel(Matrix A, Matrix B, Matrix C) {
   SetElement(Csub, row, col, Cvalue); 
 }
 
-
+float factorial(float n)
+{
+  float c;
+  float result = 1;
+ 
+  for (c = 1; c <= n; c++)
+    result = result * c;
+ 
+  return result;
+}
 
 int main(int argc, char* argv[]){
   Matrix A, B, C;
@@ -164,7 +173,9 @@ int main(int argc, char* argv[]){
     int k = 0;
     for(int j = 0; j < A.width; j++) {
       // C(line, i)   = line! / ( (line-i)! * i! ) 
-      if( k <= j ) A.elements[i*A.width + j] = (i! / ( (i-j)! * j! ) );
+      if( k <= i ) { 
+        A.elements[i*A.width + j] = factorial(i) / (factorial(i-j) * factorial(j));
+      }
       else A.elements[i*A.width + j] = 0;
       k++;
     }
@@ -174,13 +185,17 @@ int main(int argc, char* argv[]){
   //   for(int j = 0; j < A.width; j++)
   //     A.elements[i*A.width + j] = (rand() % 3);
 
-  // pascal generator
+  // pascal generator 2
   for(int i = 0; i < B.height; i++) {
     int k = 0;
     for(int j = 0; j < B.width; j++) {
-      if( k <= j ) B.elements[i*B.width + j] = (i! / ( (i-j)! * j! ) );
+      if(  k <= i && ((i%2==0 && k%2==1) || (i%2==1 && k%2==0)) ) {
+        B.elements[i*B.width + j] = -1.0 * (factorial(i) / (factorial(i-j) * factorial(j)));
+      } else if( k <= i ) { 
+        B.elements[i*B.width + j] = factorial(i) / (factorial(i-j) * factorial(j));
+      }
       else B.elements[i*B.width + j] = 0;
-      k++
+      k++;
     }
   }
 
@@ -189,7 +204,6 @@ int main(int argc, char* argv[]){
   //     B.elements[i*B.width + j] = (rand() % 2);
 
   MatMul(A, B, C);
-  /*
   for(int i = 0; i < min(10, A.height); i++){
     for(int j = 0; j < min(10, A.width); j++)
       printf("%f ", A.elements[i*A.width + j]);
@@ -210,5 +224,4 @@ int main(int argc, char* argv[]){
     printf("\n");
   }
   printf("\n");
-  */
 }
