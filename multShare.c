@@ -149,6 +149,8 @@ int main(int argc, char* argv[]){
   A.width = a2;
   A.elements = (float*)malloc(A.width * A.height * sizeof(float));
 
+
+
   B.height = b1;
   B.width = b2;
   B.elements = (float*)malloc(B.width * B.height * sizeof(float));
@@ -157,13 +159,34 @@ int main(int argc, char* argv[]){
   C.width = B.width;
   C.elements = (float*)malloc(C.width * C.height * sizeof(float));
 
-  for(int i = 0; i < A.height; i++)
-    for(int j = 0; j < A.width; j++)
-      A.elements[i*A.width + j] = (rand() % 3);
+  // pascal generator
+  for(int i = 0; i < A.height; i++) {
+    int k = 0;
+    for(int j = 0; j < A.width; j++) {
+      // C(line, i)   = line! / ( (line-i)! * i! ) 
+      if( k <= j ) A.elements[i*A.width + j] = (i! / ( (i-j)! * j! ) );
+      else A.elements[i*A.width + j] = 0;
+      k++;
+    }
+  }
 
-  for(int i = 0; i < B.height; i++)
-    for(int j = 0; j < B.width; j++)
-      B.elements[i*B.width + j] = (rand() % 2);
+  // for(int i = 0; i < A.height; i++)
+  //   for(int j = 0; j < A.width; j++)
+  //     A.elements[i*A.width + j] = (rand() % 3);
+
+  // pascal generator
+  for(int i = 0; i < B.height; i++) {
+    int k = 0;
+    for(int j = 0; j < B.width; j++) {
+      if( k <= j ) B.elements[i*B.width + j] = (i! / ( (i-j)! * j! ) );
+      else B.elements[i*B.width + j] = 0;
+      k++
+    }
+  }
+
+  // for(int i = 0; i < B.height; i++)
+  //   for(int j = 0; j < B.width; j++)
+  //     B.elements[i*B.width + j] = (rand() % 2);
 
   MatMul(A, B, C);
   /*
