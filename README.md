@@ -22,7 +22,10 @@ therefore the largest N * N float array can be 614400 * 614400
 # question 3
 To do that would be as simple as zeroing out sections that aren't inside the tile range
 
-so tha
+so that way when the tile is over flow it just is zeroed out since it isn't in the block range
+example
+1 0 <- 2 colums in range 0 0 <- 2 colums out of range just zero them
+0 1                      0 0
 
 # question 4
 a) answer:
