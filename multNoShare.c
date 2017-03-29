@@ -8,6 +8,7 @@
  */
 
 #include "multNoShare.h"
+#include <time.h>
 
 // Matrix multiplication - Host code 
 // Matrix dimensions are assumed to be multiples of BLOCK_SIZE 
@@ -71,6 +72,17 @@ __global__ void MatMulKernel(Matrix A, Matrix B, Matrix C) {
   C.elements[row * C.width + col] = Cvalue; 
 }
 
+float factorial(float n)
+{
+  float c;
+  float result = 1;
+ 
+  for (c = 1; c <= n; c++)
+    result = result * c;
+ 
+  return result;
+}
+
 // Usage: multNoShare a1 a2 b2
 int main(int argc, char* argv[]){
   Matrix A, B, C;
@@ -93,15 +105,48 @@ int main(int argc, char* argv[]){
   C.width = B.width;
   C.elements = (float*)malloc(C.width * C.height * sizeof(float));
 
-  for(int i = 0; i < A.height; i++)
-    for(int j = 0; j < A.width; j++)
-      A.elements[i*A.width + j] = (float)(rand() % 3);
 
-  for(int i = 0; i < B.height; i++)
-    for(int j = 0; j < B.width; j++)
-      B.elements[i*B.width + j] = (float)(rand() % 2);
+  // pascal generator
+  for(int i = 0; i < A.height; i++) {
+    int k = 0;
+    for(int j = 0; j < A.width; j++) {
+      // C(line, i)   = line! / ( (line-i)! * i! ) 
+      if( k <= i ) { 
+        A.elements[i*A.width + j] = factorial(i) / (factorial(i-j) * factorial(j));
+      }
+      else A.elements[i*A.width + j] = 0;
+      k++;
+    }
+  }
 
+  // for(int i = 0; i < A.height; i++)
+  //   for(int j = 0; j < A.width; j++)
+  //     A.elements[i*A.width + j] = (rand() % 3);
+
+  // pascal generator 2
+  for(int i = 0; i < B.height; i++) {
+    int k = 0;
+    for(int j = 0; j < B.width; j++) {
+      if(  k <= i && ((i%2==0 && k%2==1) || (i%2==1 && k%2==0)) ) {
+        B.elements[i*B.width + j] = -1.0 * (factorial(i) / (factorial(i-j) * factorial(j)));
+      } else if( k <= i ) { 
+        B.elements[i*B.width + j] = factorial(i) / (factorial(i-j) * factorial(j));
+      }
+      else B.elements[i*B.width + j] = 0;
+      k++;
+    }
+  }
+
+  // for(int i = 0; i < B.height; i++)
+  //   for(int j = 0; j < B.width; j++)
+  //     B.elements[i*B.width + j] = (rand() % 2);
+
+  clock_t start = clock(), diff;
   MatMul(A, B, C);
+  diff = clock() - start;
+
+  int msec = diff * 1000 / CLOCKS_PER_SEC;
+  printf("Time taken %d seconds %d milliseconds", msec/1000, msec%1000);
   /*
   // Print up to a 10x10 portion of the three matrices
   for(int i = 0; i < min(10, A.height); i++){

@@ -8,6 +8,7 @@
  */
 
 #include "multShare.h"
+#include <time.h>
 
 // Matrix multiplication - Host code 
 // Matrix dimensions are assumed to be multiples of BLOCK_SIZE 
@@ -203,25 +204,30 @@ int main(int argc, char* argv[]){
   //   for(int j = 0; j < B.width; j++)
   //     B.elements[i*B.width + j] = (rand() % 2);
 
+  clock_t start = clock(), diff;
   MatMul(A, B, C);
-  for(int i = 0; i < min(10, A.height); i++){
-    for(int j = 0; j < min(10, A.width); j++)
-      printf("%f ", A.elements[i*A.width + j]);
-    printf("\n");
-  }
-  printf("\n");
+  diff = clock() - start;
 
-  for(int i = 0; i < min(10, B.height); i++){
-    for(int j = 0; j < min(10, B.width); j++)
-      printf("%f ", B.elements[i*B.width + j]);
-    printf("\n");
-  }
-  printf("\n");
+  int msec = diff * 1000 / CLOCKS_PER_SEC;
+  printf("Time taken %d seconds %d milliseconds", msec/1000, msec%1000);
+  // for(int i = 0; i < min(10, A.height); i++){
+  //   for(int j = 0; j < min(10, A.width); j++)
+  //     printf("%f ", A.elements[i*A.width + j]);
+  //   printf("\n");
+  // }
+  // printf("\n");
 
-  for(int i = 0; i < min(10, C.height); i++){
-    for(int j = 0; j < min(10, C.width); j++)
-      printf("%f ", C.elements[i*C.width + j]);
-    printf("\n");
-  }
-  printf("\n");
+  // for(int i = 0; i < min(10, B.height); i++){
+  //   for(int j = 0; j < min(10, B.width); j++)
+  //     printf("%f ", B.elements[i*B.width + j]);
+  //   printf("\n");
+  // }
+  // printf("\n");
+
+  // for(int i = 0; i < min(10, C.height); i++){
+  //   for(int j = 0; j < min(10, C.width); j++)
+  //     printf("%f ", C.elements[i*C.width + j]);
+  //   printf("\n");
+  // }
+  // printf("\n");
 }
