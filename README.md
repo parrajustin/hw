@@ -1,5 +1,10 @@
 # hw
 
+# plot     
+inside the plot pdf you'll find the plot I was doing to copy the ones from 2.4 but
+for some reason I was only getting values between ~700ms
+I'll try it again another time 
+
 #question 1
 a) the graph has 5 verticies
 b) 
