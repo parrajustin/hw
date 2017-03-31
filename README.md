@@ -16,16 +16,25 @@ a->b->b 3*15
       + = 208
 
 # question 2
-ram: 4915200000 k 
+ram: 4915200000 bytes 
 float = 4 bytes
 
-4915200000 / 2 <- float * float = 2457600000
-2457600000 / 4 <- size of float = 614400000
+3 matricies * entry per matrix * 4 byte per entry = 4915200000 bytes
+entries per matrix = 409600000
+or each matrix is 204800000 * 204800000
 
-therefore the largest N * N float array can be 614400 * 614400
+or
+
+4915200000 / 3 <- 3 matrices are needed A * B = C = 1638400000 so each matrix has at max that many bytes
+1638400000 / 2 <- float * float = 819200000
+819200000 / 4 <- size of float = 204800000
+
+therefore the largest N * N float array can be 204800000 * 204800000
 
 # question 3
-To do that would be as simple as zeroing out sections that aren't inside the tile range
+To do that would be as simple as zeroing out sections that aren't inside the tile range, You can do that by just testing
+the blockId * blockDim + threadId to find how far it should go. You would have to do this for both the y and x since
+the row might go off but the column could still fit
 
 so that way when the tile is over flow it just is zeroed out since it isn't in the block range
 example
@@ -34,30 +43,25 @@ example
 
 # question 4
 a) answer:
- 1.000   0.000   0.000   0.000   0.000   0.000   0.000   0.000
-  2.000   1.000   0.000   0.000   0.000   0.000   0.000   0.000
-  4.000   4.000   1.000   0.000   0.000   0.000   0.000   0.000
-  8.000  12.000   6.000   1.000   0.000   0.000   0.000   0.000
- 16.000  32.000  24.000   8.000   1.000   0.000   0.000   0.000
- 32.000  80.000  80.000  40.000  10.000   1.000   0.000   0.000
- 64.000 192.000 240.000 160.000  60.000  12.000   1.000   0.000
-128.000 448.000 672.000 560.000 280.000  84.000  14.000   1.000
+Identity Matrix
 b)
 check code
 c)
 ram: 4915200 kB 
 int = 2 bytes
 
-4915200000 / 2 = 2457600000
-2457600000 / 2 <-size of int= 1228800000
-therefore 1228800000 * 1228800000 int array
+4915200000 / 3 = 1638400000
+1638400000 / 2 = 819200000
+819200000 / 2 <-size of int= 409600000
+therefore there can be 3 409600000 * 409600000 int array
 d)
 ram: 4915200 kB 
 int = 2 bytes
 
-4915200000 / 2 = 2457600000
-2457600000 / 8 <-size of double= 307200000
-therefore 307200000 * 307200000 double array
+4915200000 / 3 = 1638400000
+1638400000 / 2 = 819200000
+819200000 / 8 <-size of double= 102400000
+therefore 102400000 * 102400000 double array
 
 I'm not sure  I understand, According to c data type sizes a double is 8b therefore there would be a smaller size of doubles allowed
 according to my calculations the max size would be: a 307200000 * 307200000 matrix  but there would be problems since when creating it 
