@@ -29,17 +29,11 @@ a->b->b 3*15
 ram: 4915200000 bytes 
 float = 4 bytes
 
-3 matricies * entry per matrix * 4 byte per entry = 4915200000 bytes
-entries per matrix = 409600000
-or each matrix is 204800000 * 204800000
-
-or
-
 4915200000 / 3 <- 3 matrices are needed A * B = C = 1638400000 so each matrix has at max that many bytes
-1638400000 / 2 <- float * float = 819200000
-819200000 / 4 <- size of float = 204800000
+1638400000 / 4 <- size of float = 409600000
+sqrt(409600000) = 20238
 
-therefore the largest N * N float array can be 204800000 * 204800000
+therefore the largest N * N float array can be 20238 * 20238
 
 # question 3
 To do that would be as simple as zeroing out sections that aren't inside the tile range, You can do that by just testing
@@ -61,20 +55,20 @@ ram: 4915200 kB
 int = 2 bytes
 
 4915200000 / 3 = 1638400000
-1638400000 / 2 = 819200000
-819200000 / 2 <-size of int= 409600000
-therefore there can be 3 409600000 * 409600000 int array
+1638400000 / 2 <-size of int = 819200000
+sqrt(819200000) = 28621
+therefore there can be 3 28621 * 28621 int array
 d)
 ram: 4915200 kB 
 int = 2 bytes
 
 4915200000 / 3 = 1638400000
-1638400000 / 2 = 819200000
-819200000 / 8 <-size of double= 102400000
-therefore 102400000 * 102400000 double array
+1638400000 / 8 = 204800000
+sqrt(204800000) = 14310
+therefore 14310 * 14310 double array
 
 I'm not sure  I understand, According to c data type sizes a double is 8b therefore there would be a smaller size of doubles allowed
-according to my calculations the max size would be: a 307200000 * 307200000 matrix  but there would be problems since when creating it 
+according to my calculations the max size would be: a 14310 * 14310 matrix  but there would be problems since when creating it 
 ram runs out because there are more variables other than just the grid .
 
 also limited to 2,147,483,647 since that is the max int size
