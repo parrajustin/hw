@@ -1,9 +1,19 @@
 # hw
 
 # plot     
-inside the plot pdf you'll find the plot I was doing to copy the ones from 2.4 but
-for some reason I was only getting values between ~700ms
-I'll try it again another time 
+size	share time(ms)	no share(ms)
+1000	710	720
+2000	820	920
+3000	1300	1450
+4000	1310	2290
+5000	2120	4190
+6000	2980	6000
+7000	4450	9810
+8000	5990	13300
+9000	8540	19910
+10000	10870	25250
+
+chart is in "chart.png"
 
 #question 1
 a) the graph has 5 verticies
